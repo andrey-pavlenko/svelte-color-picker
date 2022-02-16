@@ -5,6 +5,13 @@ export interface HslColor {
   a?: number;
 }
 
+export interface HsvColor {
+  h: number;
+  s: number;
+  v: number;
+  a?: number;
+}
+
 export interface RgbColor {
   r: number;
   g: number;
@@ -162,4 +169,44 @@ export function rgbToHex(rgb: RgbColor): HexColor {
   const hex = '#' + [rgb.r, rgb.g, rgb.b].map((n) => n.toString(16).padStart(2, '0')).join('');
   const alpha = rgb.a != null ? Math.round(rgb.a * 255) : 255;
   return alpha < 255 ? hex + alpha.toString(16).padStart(2, '0') : hex;
+}
+
+export function rgbToHsv(rgb: RgbColor): HsvColor {
+  const r = rgb.r / 255;
+  const g = rgb.g / 255;
+  const b = rgb.b / 255;
+
+  const v = Math.max(r, g, b);
+  const c = v - Math.min(r, g, b);
+  const s = c === 0 ? 0 : c / v;
+  let h =
+    c === 0
+      ? null
+      : v === r
+      ? (g - b) / c + (g < b ? 6 : 0)
+      : v === g
+      ? (b - r) / c + 2
+      : (r - g) / c + 4;
+  h = (h % 6) * 60;
+
+  return rgb.a != null ? { h, s, v, a: rgb.a } : { h, s, v };
+}
+
+export function hsvToRgb(hsv: HsvColor): RgbColor {
+  let r: number, g: number, b: number;
+  let h = (hsv.h % 360) / 60;
+
+  const c = hsv.v * hsv.s;
+  const x = c * (1 - Math.abs((h % 2) - 1));
+  r = g = b = hsv.v - c;
+
+  h = ~~h;
+  r += [c, x, 0, 0, x, c][h];
+  g += [x, c, c, x, 0, 0][h];
+  b += [0, 0, x, c, c, x][h];
+
+  r = Math.floor(r * 255);
+  g = Math.floor(g * 255);
+  b = Math.floor(b * 255);
+  return hsv.a != null ? { r, g, b, a: hsv.a } : { r, g, b };
 }
