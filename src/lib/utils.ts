@@ -43,6 +43,31 @@ export function hexToRgb(hex: HexColor): RgbColor {
   return rgb;
 }
 
+export function hslToRgb00(hsl: HslColor): RgbColor {
+  let r: number, g: number, b: number;
+  let _h = (hsl.h % 360) / 60;
+
+  const c = hsl.l * hsl.s;
+  const x = c * (1 - Math.abs((_h % 2) - 1));
+  r = g = b = (hsl.a ?? 1) - c;
+
+  _h = ~~_h;
+  r += [c, x, 0, 0, x, c][_h];
+  g += [x, c, c, x, 0, 0][_h];
+  b += [0, 0, x, c, c, x][_h];
+  console.info(hsl, _h, c, r, g, b);
+
+  const rgb: RgbColor = {
+    r: Math.floor(r * 255),
+    g: Math.floor(g * 255),
+    b: Math.floor(b * 255)
+  };
+  if (hsl.a != null) {
+    rgb.a = hsl.a;
+  }
+  return rgb;
+}
+
 export function hslToRgb(hsl: HslColor): RgbColor {
   const s = hsl.s / 100;
   const l = hsl.l / 100;
@@ -135,6 +160,6 @@ export function hslToHex(hsl: HslColor): HexColor {
 
 export function rgbToHex(rgb: RgbColor): HexColor {
   const hex = '#' + [rgb.r, rgb.g, rgb.b].map((n) => n.toString(16).padStart(2, '0')).join('');
-  const alpha = rgb.a != null ? Math.round(rgb.a * 255) : undefined;
-  return alpha != null ? hex + alpha.toString(16).padStart(2, '0') : hex;
+  const alpha = rgb.a != null ? Math.round(rgb.a * 255) : 255;
+  return alpha < 255 ? hex + alpha.toString(16).padStart(2, '0') : hex;
 }
