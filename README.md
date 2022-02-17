@@ -1,4 +1,4 @@
-# CSvelteColorPicker
+# SvelteColorPicker
 
 Inspired by:
 
