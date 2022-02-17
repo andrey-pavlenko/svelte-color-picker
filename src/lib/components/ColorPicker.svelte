@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { hexToRgb, rgbToHex, rgbToHsv, hsvToRgb } from '../utils';
+  import { hexToRgb, rgbToHex, rgbToHsv, hsvToRgb } from '../converter';
 
   let classes = '';
   export { classes as class };
