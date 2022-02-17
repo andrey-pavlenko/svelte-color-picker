@@ -16,6 +16,9 @@ const config = {
           '@lib': resolve('./src/lib')
         }
       }
+    },
+    package: {
+      files: (file) => !/\.spec\.[jt]s$/gi.test(file)
     }
   }
 };

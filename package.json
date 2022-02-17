@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "svelte-kit dev --host 0.0.0.0",
     "build": "svelte-kit build",
-    "package": "svelte-kit package && sass --no-source-map src/lib/styles.sass package/styles.css",
+    "package": "sass --no-source-map src/lib/styles.sass src/lib/styles.css && svelte-kit package",
     "preview": "svelte-kit preview",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
