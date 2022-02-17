@@ -1,15 +1,37 @@
+@use "sass:math"
+
 .colorpicker
   --cp-tone-height: 100px
-  --cp-hue-height: 16px
-  --cp-alpha-height: 16px
+  --cp-slider-height: 8px
+  --cp-hue-height: 8px
+  --cp-alpha-height: 8px
   --cp-alpha-color-1: #aaa
   --cp-alpha-color-2: #fff
-  --cp-body-gap: 8px
+  --cp-body-gap: 16px
+  --cp-aplha-image: repeating-linear-gradient(45deg, var(--cp-alpha-color-1) 25%, transparent 25%, transparent 75%, var(--cp-alpha-color-1) 75%, var(--cp-alpha-color-1)), repeating-linear-gradient(45deg, var(--cp-alpha-color-1) 25%, var(--cp-alpha-color-2) 25%, var(--cp-alpha-color-2) 75%, var(--cp-alpha-color-1) 75%, var(--cp-alpha-color-1))
+  --cp-aplha-image-position: 0 0, 4px 4px
+  --cp-aplha-image-size: 8px 8px
+
+  .cp__body
+    display: grid
+    gap: var(--cp-body-gap)
+    grid-template-columns: calc(var(--cp-body-gap) + var(--cp-slider-height) * 2) 1fr
+
+  %indicator
+    content: ''
+    display: block
+    position: absolute
+    box-sizing: border-box
+    border: 1px solid white
+    border-radius: 50%
   
   .cp__tone
+    grid-column: span 2
     position: relative
     height: var(--cp-tone-height)
-    background: linear-gradient(180deg, #ffffff00, #000000ff), linear-gradient(90deg, #ffffffff, #00000000), var(--cp-current-color)
+    background-image: linear-gradient(rgba(0,0,0,0),#000),linear-gradient(90deg,#fff,var(--cp-current-hue))
+    cursor: crosshair
+    outline: none
 
     &--marker
       position: relative
@@ -17,29 +39,60 @@
       width: 0
       pointer-events: none
       &::after
-        position: absolute
-        content: ''
-        display: block
-        left: -4px
-        top: -4px
-        width: 8px
-        height: 8px
-        // background-color: red
-        box-sizing: border-box
-        border: 2px solid red
-        border-radius: 50%        
+        $size: 12px
+        @extend %indicator
+        left: -#{math.div($size, 2)}
+        top: -#{math.div($size, 2)}
+        width: $size
+        height: $size
+        box-shadow: 0 0 3px rgba(0, 0, 0, 0.5)
+  
+  .cp__sample
+    position: relative
+    grid-row: span 2
+    border-radius: 50%
+    background-image: var(--cp-aplha-image)
+    background-position: var(--cp-aplha-image-position)
+    background-size: var(--cp-aplha-image-size)
+    overflow: hidden
+    &::before
+      position: absolute
+      content: ''
+      display: block
+      left: 0
+      right: 0
+      top: 0
+      bottom: 0
+      background-color: var(--cp-current-color)
+
+  %indicator-range
+    @extend %indicator
+    border-width: 2px
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.5)
+    content: ''
+    display: block
+    position: absolute
+    height: calc(var(--cp-slider-height) * 2)
+    width: calc(var(--cp-slider-height) * 2)
+    top: calc(var(--cp-slider-height) / 2 * -1)
+    pointer-events: none
 
   .cp__hue
-    margin-top: var(--cp-body-gap)
-    height: var(--cp-hue-height)
+    height: var(--cp-slider-height)
     background: linear-gradient(to right, red 0, #ff0 16.66%,#0f0 33.33%, #0ff 50%, #00f 66.66%, #f0f 83.33%, red 100%)
+    box-sizing: border-box
+    border-radius: var(--cp-slider-height)
+
+    &::after
+      @extend %indicator-range
+      left: calc(var(--cp-hue-left) - var(--cp-alpha-height))
+      background-color: var(--cp-current-hue)
 
   .cp__alpha
-    margin-top: var(--cp-body-gap)
-    height: var(--cp-alpha-height)
-    background-image: repeating-linear-gradient(45deg, var(--cp-alpha-color-1) 25%, transparent 25%, transparent 75%, var(--cp-alpha-color-1) 75%, var(--cp-alpha-color-1)), repeating-linear-gradient(45deg, var(--cp-alpha-color-1) 25%, var(--cp-alpha-color-2) 25%, var(--cp-alpha-color-2) 75%, var(--cp-alpha-color-1) 75%, var(--cp-alpha-color-1))
-    background-position: 0 0, 4px 4px
-    background-size: 8px 8px
+    height: var(--cp-slider-height)
+    background-image: var(--cp-aplha-image)
+    background-position: var(--cp-aplha-image-position)
+    background-size: var(--cp-aplha-image-size)
 
     &::before
       content: ''
@@ -49,20 +102,26 @@
       right: 0
       top: 0
       bottom: 0
-      background: linear-gradient(90deg, rgba(0, 0, 0, 0), var(--cp-current-color))
+      background: linear-gradient(90deg, rgba(0, 0, 0, 0), var(--cp-current-hue))
+      border-radius: var(--cp-slider-height)
+    
+    &::after
+      @extend %indicator-range
+      left: calc(var(--cp-alpha-left) - var(--cp-alpha-height))
+      background-color: var(--cp-current-color)
   
   .cp__hue, .cp__alpha
     position: relative
     input[type=range]
-      width: 100%
+      width: calc(100% + 1rem)
       height: 100%
       position: absolute
-      left: 0
+      left: -0.5rem
       top: 0
       cursor: pointer
       box-sizing: border-box
       margin: 0
       padding: 0
       border: none
-      // opacity: 0
+      opacity: 0
 

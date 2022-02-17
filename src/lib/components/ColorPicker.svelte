@@ -3,14 +3,11 @@
 
   let classes = '';
   export { classes as class };
-  export let init = '#000';
-  export let color: string;
-
-  console.info(init);
+  export let color = '#000';
 
   let h: number, s: number, v: number, a: number, x: number, y: number;
 
-  function updateInit(init: string) {
+  function initColors(init: string) {
     const hsv = rgbToHsv(hexToRgb(init));
     h = hsv.h;
     s = hsv.s;
@@ -24,10 +21,7 @@
     color = rgbToHex(hsvToRgb({ h, s: x / 100, v: (100 - y) / 100, a }));
   }
 
-  updateInit(init);
-  updateColor(h, x, y, a);
-
-  $: updateInit(init);
+  $: initColors(color);
   $: updateColor(h, x, y, a);
 
   function actionToneInteraction(node: HTMLElement) {
@@ -59,8 +53,27 @@
       node.setPointerCapture(event.pointerId);
     }
 
+    function handleKeyboardMove(event: KeyboardEvent) {
+      const step = 0.5;
+      switch (event.code) {
+        case 'ArrowUp':
+          y = clamp(y - step, 0, 100);
+          break;
+        case 'ArrowDown':
+          y = clamp(y + step, 0, 100);
+          break;
+        case 'ArrowLeft':
+          x = clamp(x - step, 0, 100);
+          break;
+        case 'ArrowRight':
+          x = clamp(x + step, 0, 100);
+          break;
+      }
+    }
+
     node.addEventListener('pointerdown', handleMoveStart);
     node.addEventListener('pointerup', handleMoveEnd);
+    node.addEventListener('keydown', handleKeyboardMove);
 
     return {
       destroy() {
@@ -68,21 +81,26 @@
         node.removeEventListener('mousemove', handleMove);
         node.removeEventListener('pointerdown', handleMoveStart);
         node.removeEventListener('pointerup', handleMoveEnd);
+        node.removeEventListener('keydown', handleKeyboardMove);
       }
     };
   }
 </script>
 
 <div class={'colorpicker' + (classes ? ' ' + classes : '')}>
-  <div class="cp__body" style="--cp-current-color: {rgbToHex(hsvToRgb({ h, s: 1, v: 1 }))}">
-    <div class="cp__tone" use:actionToneInteraction>
+  <div
+    class="cp__body"
+    style="--cp-current-hue: {rgbToHex(hsvToRgb({ h, s: 1, v: 1 }))}; --cp-current-color: {color} "
+  >
+    <div class="cp__tone" tabindex="0" use:actionToneInteraction>
       <div class="cp__tone--marker" style="left: {x}%; top: {y}%" />
     </div>
-    <div class="cp__hue">
+    <div class="cp__sample" />
+    <div class="cp__hue" style="--cp-hue-left: {(h / 360) * 100}%">
       <input type="range" min="0" max="359" step="1" bind:value={h} />
     </div>
-    <div class="cp__alpha">
-      <input type="range" min="0" max="1" step="any" bind:value={a} />
+    <div class="cp__alpha" style="--cp-alpha-left: {a * 100}%">
+      <input type="range" min="0" max="1" step="0.005" bind:value={a} />
     </div>
   </div>
 </div>
