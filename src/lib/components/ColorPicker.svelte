@@ -35,20 +35,20 @@
       y = clamp(offsetY / height, 0, 1) * 100;
     }
 
-    function handleMoveStart(event: PointerEvent) {
+    function handlePointerMoveStart(event: PointerEvent) {
       updatePosition(event);
       node.setPointerCapture(event.pointerId);
-      node.addEventListener('mousemove', handleMove);
-      node.addEventListener('touchmove', handleMove);
+      node.addEventListener('mousemove', handlePointerMove);
+      node.addEventListener('touchmove', handlePointerMove);
     }
 
-    function handleMove(event: PointerEvent) {
+    function handlePointerMove(event: PointerEvent) {
       updatePosition(event);
     }
 
-    function handleMoveEnd(event: PointerEvent) {
-      node.removeEventListener('mousemove', handleMove);
-      node.removeEventListener('touchmove', handleMove);
+    function handlePinterMoveEnd(event: PointerEvent) {
+      node.removeEventListener('mousemove', handlePointerMove);
+      node.removeEventListener('touchmove', handlePointerMove);
       node.setPointerCapture(event.pointerId);
     }
 
@@ -57,28 +57,32 @@
       switch (event.code) {
         case 'ArrowUp':
           y = clamp(y - step, 0, 100);
+          event.preventDefault();
           break;
         case 'ArrowDown':
           y = clamp(y + step, 0, 100);
+          event.preventDefault();
           break;
         case 'ArrowLeft':
           x = clamp(x - step, 0, 100);
+          event.preventDefault();
           break;
         case 'ArrowRight':
           x = clamp(x + step, 0, 100);
+          event.preventDefault();
           break;
       }
     }
 
-    node.addEventListener('pointerdown', handleMoveStart);
-    node.addEventListener('pointerup', handleMoveEnd);
+    node.addEventListener('pointerdown', handlePointerMoveStart);
+    node.addEventListener('pointerup', handlePinterMoveEnd);
     node.addEventListener('keydown', handleKeyboardMove);
 
     return {
       destroy() {
-        node.removeEventListener('mousemove', handleMove);
-        node.removeEventListener('pointerdown', handleMoveStart);
-        node.removeEventListener('pointerup', handleMoveEnd);
+        node.removeEventListener('mousemove', handlePointerMove);
+        node.removeEventListener('pointerdown', handlePointerMoveStart);
+        node.removeEventListener('pointerup', handlePinterMoveEnd);
         node.removeEventListener('keydown', handleKeyboardMove);
       }
     };
