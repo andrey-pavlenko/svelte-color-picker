@@ -25,9 +25,8 @@
       }
     }
 
-    function handleClickOutside(event: MouseEvent) {
+    function handleClickOutside(event: PointerEvent) {
       if (event.target instanceof Node) {
-        console.info('handleClickOutside', event.currentTarget, event.target);
         if (!node.contains(event.target)) {
           isOpen = false;
         }
@@ -36,9 +35,8 @@
 
     return {
       destroy() {
-        console.info('actionInteraction destroy');
         document.removeEventListener('keyup', handleKeyboardClose);
-        document.removeEventListener('click', handleClickOutside);
+        document.removeEventListener('pointerup', handleClickOutside);
       },
       update(opened: boolean) {
         if (opened) {
@@ -48,13 +46,12 @@
               .closest('.colorinput')
               ?.querySelector<HTMLElement | null>('.colorpicker .cp__tone')
               ?.focus();
-            document.addEventListener('click', handleClickOutside);
+            document.addEventListener('pointerup', handleClickOutside);
           }, 0);
         } else {
           document.removeEventListener('keyup', handleKeyboardClose);
-          document.removeEventListener('click', handleClickOutside);
+          document.removeEventListener('pointerout', handleClickOutside);
         }
-        console.info('actionInteraction update', opened);
       }
     };
   }

@@ -62,7 +62,6 @@ export function hslToRgb00(hsl: HslColor): RgbColor {
   r += [c, x, 0, 0, x, c][_h];
   g += [x, c, c, x, 0, 0][_h];
   b += [0, 0, x, c, c, x][_h];
-  console.info(hsl, _h, c, r, g, b);
 
   const rgb: RgbColor = {
     r: Math.floor(r * 255),
