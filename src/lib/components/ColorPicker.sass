@@ -1,21 +1,18 @@
 @use "sass:math"
+@import './mixin'
 
 .colorpicker
   --cp-tone-height: 100px
-  --cp-slider-height: 8px
+  --cp-slider-size: 8px
   --cp-hue-height: 8px
   --cp-alpha-height: 8px
-  --cp-alpha-color-1: #aaa
-  --cp-alpha-color-2: #fff
   --cp-body-gap: 16px
-  --cp-aplha-image: repeating-linear-gradient(45deg, var(--cp-alpha-color-1) 25%, transparent 25%, transparent 75%, var(--cp-alpha-color-1) 75%, var(--cp-alpha-color-1)), repeating-linear-gradient(45deg, var(--cp-alpha-color-1) 25%, var(--cp-alpha-color-2) 25%, var(--cp-alpha-color-2) 75%, var(--cp-alpha-color-1) 75%, var(--cp-alpha-color-1))
-  --cp-aplha-image-position: 0 0, 4px 4px
-  --cp-aplha-image-size: 8px 8px
+  @include aplha-vars('cp', #aaa, #fff, 4px)
 
   .cp__body
     display: grid
     gap: var(--cp-body-gap)
-    grid-template-columns: calc(var(--cp-body-gap) + var(--cp-slider-height) * 2) 1fr
+    grid-template-columns: calc(var(--cp-body-gap) + var(--cp-slider-size) * 2) 1fr
 
   %indicator
     content: ''
@@ -72,16 +69,16 @@
     content: ''
     display: block
     position: absolute
-    height: calc(var(--cp-slider-height) * 2)
-    width: calc(var(--cp-slider-height) * 2)
-    top: calc(var(--cp-slider-height) / 2 * -1)
+    height: calc(var(--cp-slider-size) * 2)
+    width: calc(var(--cp-slider-size) * 2)
+    top: calc(var(--cp-slider-size) / 2 * -1)
     pointer-events: none
 
   .cp__hue
-    height: var(--cp-slider-height)
+    height: var(--cp-slider-size)
     background: linear-gradient(to right, red 0, #ff0 16.66%,#0f0 33.33%, #0ff 50%, #00f 66.66%, #f0f 83.33%, red 100%)
     box-sizing: border-box
-    border-radius: var(--cp-slider-height)
+    border-radius: var(--cp-slider-size)
 
     &::after
       @extend %indicator-range
@@ -89,7 +86,7 @@
       background-color: var(--cp-current-hue)
 
   .cp__alpha
-    height: var(--cp-slider-height)
+    height: var(--cp-slider-size)
     background-image: var(--cp-aplha-image)
     background-position: var(--cp-aplha-image-position)
     background-size: var(--cp-aplha-image-size)
@@ -103,7 +100,7 @@
       top: 0
       bottom: 0
       background: linear-gradient(90deg, rgba(0, 0, 0, 0), var(--cp-current-hue))
-      border-radius: var(--cp-slider-height)
+      border-radius: var(--cp-slider-size)
     
     &::after
       @extend %indicator-range
@@ -112,6 +109,7 @@
   
   .cp__hue, .cp__alpha
     position: relative
+    width: calc(100% - var(--cp-slider-size))
     input[type=range]
       width: calc(100% + 1rem)
       height: 100%

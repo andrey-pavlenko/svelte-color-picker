@@ -47,7 +47,6 @@
     }
 
     function handleMoveEnd(event: PointerEvent) {
-      // console.info('handleMoveEnd', event);
       node.removeEventListener('mousemove', handleMove);
       node.removeEventListener('touchmove', handleMove);
       node.setPointerCapture(event.pointerId);
@@ -77,7 +76,6 @@
 
     return {
       destroy() {
-        console.info('actionToneInteraction destroy');
         node.removeEventListener('mousemove', handleMove);
         node.removeEventListener('pointerdown', handleMoveStart);
         node.removeEventListener('pointerup', handleMoveEnd);
