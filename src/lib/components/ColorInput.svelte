@@ -4,6 +4,7 @@
   let classes = '';
   export { classes as class };
   export let color = '#000';
+  export let debounce = 0;
   export let isOpen = false;
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -25,7 +26,7 @@
       }
     }
 
-    function handleClickOutside(event: PointerEvent) {
+    function handleClickOutside(event: MouseEvent | TouchEvent) {
       if (event.target instanceof Node) {
         if (!node.contains(event.target)) {
           isOpen = false;
@@ -36,7 +37,7 @@
     return {
       destroy() {
         document.removeEventListener('keyup', handleKeyboardClose);
-        document.removeEventListener('pointerup', handleClickOutside);
+        document.removeEventListener('click', handleClickOutside);
       },
       update(opened: boolean) {
         if (opened) {
@@ -46,11 +47,11 @@
               .closest('.colorinput')
               ?.querySelector<HTMLElement | null>('.colorpicker .cp__tone')
               ?.focus();
-            document.addEventListener('pointerup', handleClickOutside);
+            document.addEventListener('click', handleClickOutside);
           }, 0);
         } else {
           document.removeEventListener('keyup', handleKeyboardClose);
-          document.removeEventListener('pointerout', handleClickOutside);
+          document.removeEventListener('click', handleClickOutside);
         }
       }
     };
@@ -72,7 +73,7 @@
   </div>
   {#if isOpen}
     <div class="ci__picker">
-      <ColorPicker bind:color />
+      <ColorPicker bind:color {debounce} />
     </div>
   {/if}
 </div>
