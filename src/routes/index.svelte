@@ -5,6 +5,10 @@
   const colors = ['#FF6F00', '#3DB503', '#035FA1', '#ffffff', '#ffffff'];
 
   let color = '#00f';
+
+  function handleCapturePointerClick(event: Event) {
+    console.info(event.target instanceof HTMLElement ? event.target.textContent : event.target);
+  }
 </script>
 
 <h1 style="color: {color};">Welcome to SvelteKit</h1>
@@ -35,3 +39,15 @@
   <span>{color}</span>
   <span style="display: inline-block; height: 32px; width: 64px; background-color: {color};" />
 </div>
+
+{#each Array(10).fill('') as _}
+  <p>
+    Lorem ipsum
+    <mark on:click={handleCapturePointerClick}>dolor</mark>
+    sit amet consectetur adipisicing elit.
+    <mark on:click={handleCapturePointerClick}>Tempora</mark>
+    temporibus ad quo eius? Vel debitis suscipit mollitia atque fugit blanditiis repellendus impedit,
+    illum officia soluta non
+    <mark on:click={handleCapturePointerClick}>consequatur.</mark>Adipisci, eius asperiores.
+  </p>
+{/each}

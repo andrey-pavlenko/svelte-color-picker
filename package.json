@@ -1,6 +1,6 @@
 {
   "name": "svelte-color-picker",
-  "version": "0.0.1",
+  "version": "0.1.6",
   "scripts": {
     "dev": "svelte-kit dev --host 0.0.0.0",
     "build": "svelte-kit build",

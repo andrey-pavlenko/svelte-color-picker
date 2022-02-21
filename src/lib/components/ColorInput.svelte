@@ -57,12 +57,16 @@
   }
 </script>
 
-<div class={'colorinput' + (classes ? ' ' + classes : '')} use:actionInteraction={isOpen}>
+<div
+  class={'colorinput' + (classes ? ' ' + classes : '')}
+  use:actionInteraction={isOpen}
+  class:is-open={isOpen}
+>
   <div
     class="ci__input"
     tabindex="0"
     style="--ci-current-color: {color}"
-    on:click={() => (isOpen = !isOpen)}
+    on:pointerdown={() => (isOpen = !isOpen)}
   >
     <div class="ci__input--indicator" />
   </div>

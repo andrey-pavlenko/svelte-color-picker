@@ -29,27 +29,35 @@
       return Math.max(Math.min(value, max), min);
     }
 
-    function updatePosition({ offsetX, offsetY }: { offsetX: number; offsetY: number }) {
-      const { width, height } = node.getBoundingClientRect();
-      x = clamp(offsetX / width, 0, 1) * 100;
-      y = clamp(offsetY / height, 0, 1) * 100;
+    function preventClick(event: Event) {
+      event.preventDefault();
+      event.stopPropagation();
     }
 
-    function handlePointerMoveStart(event: PointerEvent) {
-      updatePosition(event);
-      node.setPointerCapture(event.pointerId);
-      node.addEventListener('mousemove', handlePointerMove);
-      node.addEventListener('touchmove', handlePointerMove);
+    function handlePointerMoveStart(event: MouseEvent) {
+      document.addEventListener('mousemove', handlePointerMove);
+      document.addEventListener('touchmove', handlePointerMove);
+      document.addEventListener('mouseup', handlePinterMoveEnd);
+      document.addEventListener('touchend', handlePinterMoveEnd);
+      // document.addEventListener('click', preventClick, { capture: true });
+      event.preventDefault();
     }
 
-    function handlePointerMove(event: PointerEvent) {
-      updatePosition(event);
+    function handlePointerMove(event: MouseEvent | TouchEvent) {
+      const { pageX, pageY } = event instanceof MouseEvent ? event : event.changedTouches[0];
+      const { left, top, width, height } = node.getBoundingClientRect();
+      x = clamp((pageX - left - window.scrollX) / width, 0, 1) * 100;
+      y = clamp((pageY - top - window.scrollY) / height, 0, 1) * 100;
     }
 
-    function handlePinterMoveEnd(event: PointerEvent) {
-      node.removeEventListener('mousemove', handlePointerMove);
-      node.removeEventListener('touchmove', handlePointerMove);
-      node.setPointerCapture(event.pointerId);
+    function handlePinterMoveEnd() {
+      document.removeEventListener('mousemove', handlePointerMove);
+      document.removeEventListener('touchmove', handlePointerMove);
+      document.removeEventListener('mouseup', handlePinterMoveEnd);
+      document.removeEventListener('touchend', handlePinterMoveEnd);
+      // setTimeout(() => {
+      //   document.removeEventListener('click', preventClick, { capture: true });
+      // }, 0);
     }
 
     function handleKeyboardMove(event: KeyboardEvent) {
@@ -74,15 +82,19 @@
       }
     }
 
-    node.addEventListener('pointerdown', handlePointerMoveStart);
-    node.addEventListener('pointerup', handlePinterMoveEnd);
+    node.addEventListener('mousedown', handlePointerMoveStart);
+    node.addEventListener('touchstart', handlePointerMoveStart);
+    // node.addEventListener('mouseup', handlePinterMoveEnd);
+    // node.addEventListener('touchend', handlePinterMoveEnd);
     node.addEventListener('keydown', handleKeyboardMove);
 
     return {
       destroy() {
-        node.removeEventListener('mousemove', handlePointerMove);
-        node.removeEventListener('pointerdown', handlePointerMoveStart);
-        node.removeEventListener('pointerup', handlePinterMoveEnd);
+        handlePinterMoveEnd();
+        node.removeEventListener('mousedown', handlePointerMoveStart);
+        node.removeEventListener('touchstart', handlePointerMoveStart);
+        // node.removeEventListener('mouseup', handlePinterMoveEnd);
+        // node.removeEventListener('touchend', handlePinterMoveEnd);
         node.removeEventListener('keydown', handleKeyboardMove);
       }
     };
