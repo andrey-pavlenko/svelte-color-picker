@@ -24,6 +24,12 @@ describe('Color conversion', () => {
     expect(rgbToHex({ r: 15, g: 15, b: 15 })).toBe('#0f0f0f');
     expect(rgbToHex({ r: 15, g: 15, b: 15, a: 1 })).toBe('#0f0f0f');
     expect(rgbToHex({ r: 15, g: 15, b: 15, a: 0.063 })).toBe('#0f0f0f10');
+    expect(rgbToHex({ r: 300, g: 300, b: 300 })).toBe('#ffffff');
+    expect(rgbToHex({ r: -300, g: -300, b: -300 })).toBe('#000000');
+    expect(rgbToHex({ r: 300, g: -300, b: 300 })).toBe('#ff00ff');
+    expect(rgbToHex({ r: 127, g: 127, b: 127, a: 300 })).toBe('#7f7f7f');
+    expect(rgbToHex({ r: 127, g: 127, b: 127, a: 0.5 })).toBe('#7f7f7f80');
+    expect(rgbToHex({ r: 127, g: 127, b: 127, a: -0.5 })).toBe('#7f7f7f00');
   });
   it('hexToHsl', () => {
     expect(hexToHsl('#000')).toStrictEqual({ h: 0, s: 0, l: 0 });
@@ -44,6 +50,22 @@ describe('Color conversion', () => {
   it('rgbToHsv', () => {
     expect(rgbToHsv({ r: 255, g: 0, b: 0 })).toStrictEqual({ h: 0, s: 1, v: 1 });
     expect(rgbToHsv({ r: 255, g: 0, b: 0, a: 0.5 })).toStrictEqual({ h: 0, s: 1, v: 1, a: 0.5 });
+    expect(rgbToHsv({ r: 255, g: 0, b: 0, a: -0.5 })).toStrictEqual({ h: 0, s: 1, v: 1 });
+    expect(rgbToHsv({ r: 255, g: 255, b: 255 })).toStrictEqual({ h: 0, s: 0, v: 1 });
+    expect(rgbToHsv({ r: 300, g: 300, b: 300 })).toStrictEqual({ h: 0, s: 0, v: 1 });
+    expect(rgbToHsv({ r: 0, g: 0, b: 0 })).toStrictEqual({ h: 0, s: 0, v: 0 });
+    expect(rgbToHsv({ r: -20, g: -20, b: -20 })).toStrictEqual({ h: 0, s: 0, v: 0 });
+    expect(rgbToHsv({ r: 127, g: 127, b: 127, a: 0.5 })).toStrictEqual({
+      h: 0,
+      s: 0,
+      v: 0.4980392156862745,
+      a: 0.5
+    });
+    expect(rgbToHsv({ r: 127, g: 127, b: 127, a: -0.5 })).toStrictEqual({
+      h: 0,
+      s: 0,
+      v: 0.4980392156862745
+    });
   });
   it('hvsToRgb', () => {
     expect(hsvToRgb({ h: 0, s: 1, v: 1 })).toStrictEqual({ r: 255, g: 0, b: 0 });

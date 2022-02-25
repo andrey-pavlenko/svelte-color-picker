@@ -29,6 +29,9 @@ function splitHex(hex: HexColor): string[] | undefined {
     return digits.split(/([0-9a-f]{2})/gi).filter(Boolean);
   }
 }
+function clamp(value: number, min: number, max: number): number {
+  return Math.max(Math.min(value, max), min);
+}
 
 export function hexToHsl(hex: HexColor): HslColor {
   return rgbToHsl(hexToRgb(hex));
@@ -141,9 +144,10 @@ export function hslToHex(hsl: HslColor): HexColor {
 }
 
 export function rgbToHex(rgb: RgbColor): HexColor {
-  const hex = '#' + [rgb.r, rgb.g, rgb.b].map((n) => n.toString(16).padStart(2, '0')).join('');
+  const hex =
+    '#' + [rgb.r, rgb.g, rgb.b].map((n) => clamp(n, 0, 255).toString(16).padStart(2, '0')).join('');
   const alpha = rgb.a != null ? Math.round(rgb.a * 255) : 255;
-  return alpha < 255 ? hex + alpha.toString(16).padStart(2, '0') : hex;
+  return alpha < 255 ? hex + Math.max(alpha, 0).toString(16).padStart(2, '0') : hex;
 }
 
 export function hexToHsv(hex: HexColor): HsvColor {
@@ -151,9 +155,9 @@ export function hexToHsv(hex: HexColor): HsvColor {
 }
 
 export function rgbToHsv(rgb: RgbColor): HsvColor {
-  const r = rgb.r / 255;
-  const g = rgb.g / 255;
-  const b = rgb.b / 255;
+  const r = clamp(rgb.r, 0, 255) / 255;
+  const g = clamp(rgb.g, 0, 255) / 255;
+  const b = clamp(rgb.b, 0, 255) / 255;
 
   const v = Math.max(r, g, b);
   const c = v - Math.min(r, g, b);
@@ -167,8 +171,8 @@ export function rgbToHsv(rgb: RgbColor): HsvColor {
       ? (b - r) / c + 2
       : (r - g) / c + 4;
   h = (h % 6) * 60;
-
-  return rgb.a != null ? { h, s, v, a: rgb.a } : { h, s, v };
+  const a = rgb.a != null ? clamp(rgb.a, 0, 1) : 0;
+  return a > 0 ? { h, s, v, a } : { h, s, v };
 }
 
 export function hsvToHex(hsv: HsvColor): string {
