@@ -17,14 +17,14 @@
   {#each colors as color, index}
     <div style="display: inline-block; margin: 0 1rem; box-sizing: border-box;">
       <h2 style="color: {color}; padding: 0; margin: 0">Color {index + 1}</h2>
-      <div style="background-color: white; padding: 0.25em;">
+      <div style="background-color: white; padding: 0.25em; height: 2em;">
         <ColorInput bind:color debounce={10} />
       </div>
     </div>
   {/each}
 </div>
 
-<div style="margin-bottom: 1em;">
+<div style="margin-bottom: 1em; height: 2em;">
   <ColorInput bind:color />
 </div>
 <div style="width: 300px;">

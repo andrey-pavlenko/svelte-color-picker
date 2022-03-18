@@ -8,6 +8,25 @@ Inspired by:
 
 [Demo](https://andrey-pavlenko.github.io/svelte-color-picker/)
 
+## Install
+
+> No npm package yet
+
+### From GitHub
+
+```sh
+npm install 'https://gitpkg.now.sh/andrey-pavlenko/svelte-color-picker/package?main'
+# After call
+npm install
+```
+
+### From local file
+
+```sh
+npm install <path_to_svelte-color-picker>/package
+# After call
+```
+
 ## Develope
 
 Development sources stored in `dev` directory.

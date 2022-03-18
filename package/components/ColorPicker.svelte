@@ -1,5 +1,5 @@
 <script >import { hexToRgb, rgbToHex, rgbToHsv, hsvToRgb } from '../converter';
-import _debounce from 'lodash/debounce';
+import _debounce from 'lodash.debounce';
 let classes = '';
 export { classes as class };
 export let color = '#000';

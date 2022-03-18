@@ -160,11 +160,13 @@
   position: relative;
   display: inline-block;
   width: 100px;
+  height: 100%;
 }
 .colorinput .ci__input {
   border: var(--ci-border);
   padding: var(--ci-input-padding);
   height: 100%;
+  box-sizing: border-box;
 }
 .colorinput .ci__input--indicator {
   position: relative;
