@@ -16,15 +16,18 @@ Inspired by:
 
 ```sh
 npm install 'https://gitpkg.now.sh/andrey-pavlenko/svelte-color-picker/package?main'
-# After call
-npm install
 ```
 
 ### From local file
 
 ```sh
 npm install <path_to_svelte-color-picker>/package
-# After call
+```
+
+### Remove
+
+```sh
+npm rm svelte-color-picker
 ```
 
 ## Develope
