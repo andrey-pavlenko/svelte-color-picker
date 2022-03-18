@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && rm -rf docs/* && rsync -aAXv dist/* ../docs/ && rm -rf dist",
+    "build": "vite build && rm -rf ../docs/* && rsync -aAXv dist/* ../docs/ && rm -rf dist",
     "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.json"
   },
