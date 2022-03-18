@@ -1,14 +1,17 @@
-# SvelteColorPicker
+# Svelte color picker &bull; [Demo](https://andrey-pavlenko.github.io/svelte-color-picker/)
 
 ![image](https://user-images.githubusercontent.com/31999255/159011717-adaeb9ea-d0b3-4464-89d3-944206690248.png)
+
+## Goals
+
+- pick a color in hex, like `<input type="color">`
+- fully customizable styles
 
 Inspired by:
 
 - [svelte-awesome-color-picker](https://svelte-awesome-color-picker.vercel.app/)
 - [svelte-color-picker](https://github.com/efeskucuk/svelte-color-picker)
 - [Coloris](https://github.com/mdbassit/Coloris)
-
-[Demo](https://andrey-pavlenko.github.io/svelte-color-picker/)
 
 ## Install
 
