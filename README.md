@@ -6,19 +6,19 @@ Inspired by:
 - [svelte-color-picker](https://github.com/efeskucuk/svelte-color-picker)
 - [Coloris](https://github.com/mdbassit/Coloris)
 
+[Demo](https://andrey-pavlenko.github.io/svelte-color-picker/)
+
 ## Develope
 
 Development sources stored in `dev` directory.
 
 ```sh
 npm install
-cd dev
 npm run dev
 ```
 
 ## Package
 
 ```sh
-cd dev
 npm run package
 ```
