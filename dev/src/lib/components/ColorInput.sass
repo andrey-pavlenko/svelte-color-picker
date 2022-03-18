@@ -1,0 +1,41 @@
+@import './mixin'
+
+.colorinput
+  --ci-border: 1px solid silver
+  --ci-input-padding: 0.25em
+  --ci-picker-padding: 0.5em
+  --ci-picker-bg-color: white
+  @include aplha-vars('ci', #aaa, #fff, 4px)
+
+  position: relative
+  display: inline-block
+  width: 100px
+
+  .ci__input
+    border: var(--ci-border)
+    padding: var(--ci-input-padding)
+    height: 100%
+
+    &--indicator
+      position: relative
+      width: 100%
+      height: 100%
+      &::before
+        @extend %absolut-block
+        @extend %absolut-full-size
+        background-image: var(--ci-aplha-image)
+        background-position: var(--ci-aplha-image-position)
+        background-size: var(--ci-aplha-image-size)
+      &::after
+        @extend %absolut-block
+        @extend %absolut-full-size
+        background-color: var(--ci-current-color)
+
+  .ci__picker
+    position: absolute
+    width: 200%
+    margin-top: calc(var(--ci-picker-padding) / 2)
+    z-index: 1
+    border: var(--ci-border)
+    padding: var(--ci-picker-padding)
+    background-color: var(--ci-picker-bg-color)

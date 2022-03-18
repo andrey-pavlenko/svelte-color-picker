@@ -18,6 +18,8 @@ const config = {
       }
     },
     package: {
+      dir: '../package',
+      emitTypes: true,
       files: (file) => !/\.spec\.[jt]s$/gi.test(file)
     }
   }

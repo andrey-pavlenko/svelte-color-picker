@@ -1,0 +1,20 @@
+{
+  "name": "svelte-color-picker",
+  "version": "0.1.6",
+  "type": "module",
+  "dependencies": {
+    "lodash": "^4.17.21"
+  },
+  "exports": {
+    "./package.json": "./package.json",
+    "./components/ColorInput.sass": "./components/ColorInput.sass",
+    "./components/ColorInput.svelte": "./components/ColorInput.svelte",
+    "./components/ColorPicker.sass": "./components/ColorPicker.sass",
+    "./components/ColorPicker.svelte": "./components/ColorPicker.svelte",
+    "./converter": "./converter.js",
+    ".": "./index.js",
+    "./styles.css": "./styles.css",
+    "./styles.sass": "./styles.sass"
+  },
+  "svelte": "./index.js"
+}
