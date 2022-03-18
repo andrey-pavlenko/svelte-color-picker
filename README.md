@@ -1,5 +1,7 @@
 # SvelteColorPicker
 
+![image](https://user-images.githubusercontent.com/31999255/159011717-adaeb9ea-d0b3-4464-89d3-944206690248.png)
+
 Inspired by:
 
 - [svelte-awesome-color-picker](https://svelte-awesome-color-picker.vercel.app/)
