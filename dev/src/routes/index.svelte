@@ -18,17 +18,17 @@
     <div style="display: inline-block; margin: 0 1rem; box-sizing: border-box;">
       <h2 style="color: {color}; padding: 0; margin: 0">Color {index + 1}</h2>
       <div style="background-color: white; padding: 0.25em; height: 2em;">
-        <ColorInput bind:color debounce={10} />
+        <ColorInput style="height: 32px" bind:color debounce={10} />
       </div>
     </div>
   {/each}
 </div>
 
 <div style="margin-bottom: 1em; height: 2em;">
-  <ColorInput bind:color />
+  <ColorInput style="height: 32px" bind:color />
 </div>
 <div style="width: 300px;">
-  <ColorPicker bind:color debounce={1000} />
+  <ColorPicker style="border: 1px solid red; padding: 8px;" bind:color debounce={1000} />
 </div>
 <div style="margin-top: 1em;">
   <button on:click={() => (color = '#f00')}>#f00</button>

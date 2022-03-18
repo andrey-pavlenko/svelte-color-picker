@@ -2,6 +2,7 @@
 import _debounce from 'lodash.debounce';
 let classes = '';
 export { classes as class };
+export let style = undefined;
 export let color = '#000';
 export let debounce = 0;
 let h, s, v, a, x, y;
@@ -91,7 +92,7 @@ function actionToneInteraction(node) {
 }
 </script>
 
-<div class={'colorpicker' + (classes ? ' ' + classes : '')}>
+<div class={'colorpicker' + (classes ? ' ' + classes : '')} style={style || undefined}>
   <div
     class="cp__body"
     style="--cp-current-hue: {rgbToHex(hsvToRgb({ h, s: 1, v: 1 }))}; --cp-current-color: {color} "

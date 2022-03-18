@@ -58,6 +58,10 @@
         <td>Custom class</td>
       </tr>
       <tr>
+        <td><code>style?: string</code></td>
+        <td>Custom styles for root element</td>
+      </tr>
+      <tr>
         <td><code>color?: string</code></td>
         <td>Current color, default <code>#000</code></td>
       </tr>
@@ -97,7 +101,11 @@
     <table>
       <tr>
         <td><code>class?: string</code></td>
-        <td>Custom class</td>
+        <td>Custom class for root element</td>
+      </tr>
+      <tr>
+        <td><code>style?: string</code></td>
+        <td>Custom styles for root element</td>
       </tr>
       <tr>
         <td><code>color?: string</code></td>

@@ -4,6 +4,7 @@
 
   let classes = '';
   export { classes as class };
+  export let style: string | undefined = undefined;
   export let color = '#000';
   export let debounce = 0;
 
@@ -110,7 +111,7 @@
   }
 </script>
 
-<div class={'colorpicker' + (classes ? ' ' + classes : '')}>
+<div class={'colorpicker' + (classes ? ' ' + classes : '')} style={style || undefined}>
   <div
     class="cp__body"
     style="--cp-current-hue: {rgbToHex(hsvToRgb({ h, s: 1, v: 1 }))}; --cp-current-color: {color} "

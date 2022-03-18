@@ -2,6 +2,7 @@ import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
         class?: string;
+        style?: string | undefined;
         color?: string;
         debounce?: number;
         isOpen?: boolean;

@@ -1,6 +1,7 @@
 <script >import ColorPicker from './ColorPicker.svelte';
 let classes = '';
 export { classes as class };
+export let style = undefined;
 export let color = '#000';
 export let debounce = 0;
 export let isOpen = false;
@@ -56,6 +57,7 @@ function actionInteraction(node, _) {
 
 <div
   class={'colorinput' + (classes ? ' ' + classes : '')}
+  style={style || undefined}
   use:actionInteraction={isOpen}
   class:is-open={isOpen}
 >
