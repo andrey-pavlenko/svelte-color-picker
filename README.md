@@ -20,7 +20,7 @@ Inspired by:
 ### From GitHub
 
 ```sh
-pnpm install -D https://github.com/andrey-pavlenko/svelte-color-picker/tarball/package
+npm install -D https://github.com/andrey-pavlenko/svelte-color-picker/tarball/package
 pnpm add -D https://github.com/andrey-pavlenko/svelte-color-picker/tarball/package
 
 ```
