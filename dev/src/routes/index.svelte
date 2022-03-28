@@ -1,6 +1,6 @@
 <script lang="ts">
   import '$lib/styles.sass';
-  import { ColorPicker, ColorInput, ColorEditHsla } from '$lib';
+  import { ColorPicker, ColorInput, ColorEditHsla, ColorEdit } from '$lib';
   import ColorEditHex from '$lib/components/ColorEditHex.svelte';
   import ColorEditRgba from '$lib/components/ColorEditRgba.svelte';
 
@@ -30,26 +30,31 @@
   <ColorInput style="height: 32px" bind:color />
 </div>
 <div style="width: 300px;">
-  <ColorPicker style="border: 1px solid red; padding: 8px;" bind:color debounce={1000} />
+  <ColorPicker style="border: 1px solid red; padding: 8px;" bind:color />
+  <!-- <ColorPicker style="border: 1px solid red; padding: 8px;" bind:color debounce={1000} /> -->
 </div>
 <div style="margin-top: 1em;">
   <button on:click={() => (color = '#f00')}>#f00</button>
   <button on:click={() => (color = '#ff0')}>#ff0</button>
   <button on:click={() => (color = '#ffc400')}>#ffc400</button>
   <button on:click={() => (color = '#00619f')}>#00619f</button>
-  <button on:click={() => (color = '#822665')}>#822665s</button>
+  <button on:click={() => (color = '#8226657a')}>#8226657a</button>
   <span>{color}</span>
   <span style="display: inline-block; height: 32px; width: 64px; background-color: {color};" />
 </div>
 
-<div style="margin: 1em 0 0 0;">
-  <ColorEditHex />
+<div style="margin: 1em 0 0 0; width: 300px">
+  <ColorEdit bind:color />
 </div>
 <div style="margin: 1em 0 0 0;">
-  <ColorEditRgba />
+  <ColorEditHex bind:color />
 </div>
 <div style="margin: 1em 0 0 0;">
-  <ColorEditHsla />
+  <!-- <ColorEditRgba color={''} /> -->
+  <ColorEditRgba bind:color />
+</div>
+<div style="margin: 1em 0 0 0">
+  <ColorEditHsla bind:color />
 </div>
 
 {#each Array(10).fill('') as _}

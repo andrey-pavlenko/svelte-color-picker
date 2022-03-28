@@ -1,22 +1,22 @@
 export interface HslColor {
-  h: number;
-  s: number;
-  l: number;
-  a?: number;
+  h: number; // ingerer: 0 ... 360
+  s: number; // integer: 0 ... 100
+  l: number; // integer: 0 ... 100
+  a?: number; // froat: 0 ... 1, with fraction
 }
 
 export interface HsvColor {
-  h: number;
-  s: number;
-  v: number;
-  a?: number;
+  h: number; // float: 0 ... 360, with fraction
+  s: number; // float: 0 ... 100, with fraction
+  v: number; // float: 0 ... 100, with fraction
+  a?: number; // froat: 0 ... 1, with fraction
 }
 
 export interface RgbColor {
-  r: number;
-  g: number;
-  b: number;
-  a?: number;
+  r: number; // integer: 0 ... 255
+  g: number; // integer: 0 ... 255
+  b: number; // integer: 0 ... 255
+  a?: number; // froat: 0 ... 1, with fraction
 }
 
 export type HexColor = string;
@@ -29,6 +29,15 @@ function splitHex(hex: HexColor): string[] | undefined {
     return digits.split(/([0-9a-f]{2})/gi).filter(Boolean);
   }
 }
+
+export function isHexValid(hex: HexColor): boolean {
+  try {
+    return splitHex(hex) != null;
+  } catch (e) {
+    return false;
+  }
+}
+
 function clamp(value: number, min: number, max: number): number {
   return Math.max(Math.min(value, max), min);
 }
@@ -159,18 +168,33 @@ export function rgbToHsv(rgb: RgbColor): HsvColor {
   const g = clamp(rgb.g, 0, 255) / 255;
   const b = clamp(rgb.b, 0, 255) / 255;
 
-  const v = Math.max(r, g, b);
-  const c = v - Math.min(r, g, b);
-  const s = c === 0 ? 0 : c / v;
-  let h =
-    c === 0
-      ? null
-      : v === r
-      ? (g - b) / c + (g < b ? 6 : 0)
-      : v === g
-      ? (b - r) / c + 2
-      : (r - g) / c + 4;
-  h = (h % 6) * 60;
+  const xmax = Math.max(r, g, b);
+  const xmin = Math.min(r, g, b);
+  const chroma = xmax - xmin;
+  const value = xmax;
+  let hue = 0;
+  let saturation = 0;
+
+  if (chroma) {
+    if (xmax === r) {
+      hue = (g - b) / chroma;
+    }
+    if (xmax === g) {
+      hue = 2 + (b - r) / chroma;
+    }
+    if (xmax === b) {
+      hue = 4 + (r - g) / chroma;
+    }
+    if (xmax) {
+      saturation = chroma / xmax;
+    }
+  }
+
+  hue = hue * 60;
+
+  const h = hue < 0 ? hue + 360 : hue;
+  const s = saturation * 100;
+  const v = value * 100;
   const a = rgb.a != null ? clamp(rgb.a, 0, 1) : 0;
   return a > 0 ? { h, s, v, a } : { h, s, v };
 }
@@ -180,20 +204,24 @@ export function hsvToHex(hsv: HsvColor): string {
 }
 
 export function hsvToRgb(hsv: HsvColor): RgbColor {
-  let r: number, g: number, b: number;
-  let h = (hsv.h % 360) / 60;
+  const saturation = hsv.s / 100;
+  const value = hsv.v / 100;
+  let chroma = saturation * value;
+  const hueBy60 = hsv.h / 60;
+  let x = chroma * (1 - Math.abs((hueBy60 % 2) - 1));
+  const m = value - chroma;
 
-  const c = hsv.v * hsv.s;
-  const x = c * (1 - Math.abs((h % 2) - 1));
-  r = g = b = hsv.v - c;
+  chroma = chroma + m;
+  x = x + m;
 
-  h = ~~h;
-  r += [c, x, 0, 0, x, c][h];
-  g += [x, c, c, x, 0, 0][h];
-  b += [0, 0, x, c, c, x][h];
+  const index = Math.floor(hueBy60) % 6;
+  const red = [chroma, x, m, m, x, chroma][index];
+  const green = [x, chroma, chroma, x, m, m][index];
+  const blue = [m, m, x, chroma, chroma, x][index];
 
-  r = Math.floor(r * 255);
-  g = Math.floor(g * 255);
-  b = Math.floor(b * 255);
+  const r = Math.round(red * 255);
+  const g = Math.round(green * 255);
+  const b = Math.round(blue * 255);
+
   return hsv.a != null ? { r, g, b, a: hsv.a } : { r, g, b };
 }
