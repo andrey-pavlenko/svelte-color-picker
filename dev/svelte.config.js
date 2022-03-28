@@ -13,7 +13,7 @@ const config = {
     vite: {
       resolve: {
         alias: {
-          '@lib': resolve('./src/lib')
+          $lib: resolve('./src/lib')
         }
       }
     },

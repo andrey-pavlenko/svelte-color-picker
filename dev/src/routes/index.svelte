@@ -1,6 +1,8 @@
 <script lang="ts">
-  import '@lib/styles.sass';
-  import { ColorPicker, ColorInput } from '@lib';
+  import '$lib/styles.sass';
+  import { ColorPicker, ColorInput, ColorEditHsla } from '$lib';
+  import ColorEditHex from '$lib/components/ColorEditHex.svelte';
+  import ColorEditRgba from '$lib/components/ColorEditRgba.svelte';
 
   const colors = ['#FF6F00', '#3DB503', '#035FA1', '#ffffff', '#ffffff'];
 
@@ -38,6 +40,16 @@
   <button on:click={() => (color = '#822665')}>#822665s</button>
   <span>{color}</span>
   <span style="display: inline-block; height: 32px; width: 64px; background-color: {color};" />
+</div>
+
+<div style="margin: 1em 0 0 0;">
+  <ColorEditHex />
+</div>
+<div style="margin: 1em 0 0 0;">
+  <ColorEditRgba />
+</div>
+<div style="margin: 1em 0 0 0;">
+  <ColorEditHsla />
 </div>
 
 {#each Array(10).fill('') as _}
