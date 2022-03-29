@@ -4,7 +4,7 @@
   import ColorEditHex from '$lib/components/ColorEditHex.svelte';
   import ColorEditRgba from '$lib/components/ColorEditRgba.svelte';
 
-  const colors = ['#FF6F00', '#3DB503', '#035FA1', '#ffffff', '#ffffff'];
+  const colors = ['#FF6F00', '#3DB503', '#035FA1', '#ffffff', '#fff0ff'];
 
   let color = '#00f';
 
@@ -27,7 +27,12 @@
 </div>
 
 <div style="margin-bottom: 1em; height: 2em;">
-  <ColorInput style="height: 32px" bind:color />
+  <ColorInput style="height: 32px" bind:color open={true}>
+    <ColorEdit
+      style="padding: var(--ci-dropdown-padding); border-top: var(--ci-border);"
+      bind:color
+    />
+  </ColorInput>
 </div>
 <div style="width: 300px;">
   <ColorPicker style="border: 1px solid red; padding: 8px;" bind:color />

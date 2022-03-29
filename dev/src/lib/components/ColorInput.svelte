@@ -6,23 +6,22 @@
   export let style: string | undefined = undefined;
   export let color = '#000';
   export let debounce = 0;
-  export let isOpen = false;
+  export let open = false;
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  function actionInteraction(node: HTMLElement, _: boolean) {
+  function actionInteraction(node: HTMLElement, opened: boolean) {
     function handleKeyboardClose(event: KeyboardEvent) {
       switch (event.code) {
         case 'Tab':
           setTimeout(() => {
             if (!node.contains(document.activeElement)) {
-              isOpen = false;
+              open = false;
             }
           }, 0);
           break;
         case 'Escape':
         case 'Enter':
         case 'NumpadEnter':
-          isOpen = false;
+          open = false;
           break;
       }
     }
@@ -30,31 +29,35 @@
     function handleClickOutside(event: MouseEvent | TouchEvent) {
       if (event.target instanceof Node) {
         if (!node.contains(event.target)) {
-          isOpen = false;
+          open = false;
         }
       }
     }
+
+    function handleOpenUpdate(opened: boolean) {
+      if (opened) {
+        document.addEventListener('keyup', handleKeyboardClose);
+        setTimeout(() => {
+          node
+            .closest('.colorinput')
+            ?.querySelector<HTMLElement | null>('.colorpicker .cp__tone')
+            ?.focus();
+          document.addEventListener('click', handleClickOutside);
+        }, 0);
+      } else {
+        document.removeEventListener('keyup', handleKeyboardClose);
+        document.removeEventListener('click', handleClickOutside);
+      }
+    }
+
+    handleOpenUpdate(opened);
 
     return {
       destroy() {
         document.removeEventListener('keyup', handleKeyboardClose);
         document.removeEventListener('click', handleClickOutside);
       },
-      update(opened: boolean) {
-        if (opened) {
-          document.addEventListener('keyup', handleKeyboardClose);
-          setTimeout(() => {
-            node
-              .closest('.colorinput')
-              ?.querySelector<HTMLElement | null>('.colorpicker .cp__tone')
-              ?.focus();
-            document.addEventListener('click', handleClickOutside);
-          }, 0);
-        } else {
-          document.removeEventListener('keyup', handleKeyboardClose);
-          document.removeEventListener('click', handleClickOutside);
-        }
-      }
+      update: handleOpenUpdate
     };
   }
 </script>
@@ -62,20 +65,21 @@
 <div
   class={'colorinput' + (classes ? ' ' + classes : '')}
   style={style || undefined}
-  use:actionInteraction={isOpen}
-  class:is-open={isOpen}
+  use:actionInteraction={open}
+  class:is-open={open}
 >
   <div
     class="ci__input"
     tabindex="0"
     style="--ci-current-color: {color}"
-    on:pointerdown={() => (isOpen = !isOpen)}
+    on:pointerdown={() => (open = !open)}
   >
     <div class="ci__input--indicator" />
   </div>
-  {#if isOpen}
-    <div class="ci__picker">
+  {#if open}
+    <div class="ci__dropdown">
       <ColorPicker bind:color {debounce} />
+      <slot />
     </div>
   {/if}
 </div>
