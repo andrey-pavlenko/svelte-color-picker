@@ -1,0 +1,48 @@
+.coloredit 
+  --ce-label-color: grey
+  --ce-arrow-size: 6px
+  --ce-arrow-thickness: 2px
+  --ce-arrow-color: grey
+
+  display: flex
+
+  .ce__grid
+    display: grid
+    column-gap: 0.5em
+    grid-template-columns: repeat(var(--ce--columns), 1fr)
+    align-items: center
+    flex: 1 0
+
+    input::-webkit-outer-spin-button, input::-webkit-inner-spin-button
+      -webkit-appearance: none
+      margin: 0
+
+    input[type="number"]
+      -moz-appearance: textfield
+
+    input[type="number"], input[type="text"], &--label
+      box-sizing: border-box
+      text-align: center
+      width: 100%
+      outline: none
+
+    &--label
+      color: var(--ce-label-color)
+
+  .ce__switch-buttons
+    margin: 0 0 0 0.5em
+    display: flex
+    flex-direction: column
+    justify-content: space-evenly
+
+    .button--up, .button--down
+      cursor: pointer
+      width: var(--ce-arrow-size)
+      height: var(--ce-arrow-size)
+      border-right: var(--ce-arrow-thickness) solid var(--ce-label-color)
+      border-bottom: var(--ce-arrow-thickness) solid var(--ce-label-color)
+      transform-origin: center
+    .button--up
+      transform: rotate(-135deg)
+    .button--down
+      transform: rotate(45deg)

@@ -152,8 +152,8 @@
 .colorinput {
   --ci-border: 1px solid silver;
   --ci-input-padding: 0.25em;
-  --ci-picker-padding: 0.5em;
-  --ci-picker-bg-color: white;
+  --ci-dropdown-padding: 0.5em;
+  --ci-dropdown-bg-color: white;
   --ci-aplha-image: repeating-linear-gradient(45deg, #aaa 25%, transparent 25%, transparent 75%, #aaa 75%, #aaa), repeating-linear-gradient(45deg, #aaa 25%, #fff 25%, #fff 75%, #aaa 75%, #aaa);
   --ci-aplha-image-position: 0 0, 4px 4px;
   --ci-aplha-image-size: 8px 8px;
@@ -180,12 +180,66 @@
 .colorinput .ci__input--indicator::after {
   background-color: var(--ci-current-color);
 }
-.colorinput .ci__picker {
+.colorinput .ci__dropdown {
   position: absolute;
   width: 200%;
-  margin-top: calc(var(--ci-picker-padding) / 2);
+  margin-top: calc(var(--ci-dropdown-padding) / 2);
   z-index: 1;
   border: var(--ci-border);
-  padding: var(--ci-picker-padding);
-  background-color: var(--ci-picker-bg-color);
+  background-color: var(--ci-dropdown-bg-color);
+  box-sizing: border-box;
+}
+.colorinput .ci__dropdown .colorpicker {
+  padding: var(--ci-dropdown-padding);
+}
+
+.coloredit {
+  --ce-label-color: grey;
+  --ce-arrow-size: 6px;
+  --ce-arrow-thickness: 2px;
+  --ce-arrow-color: grey;
+  display: flex;
+}
+.coloredit .ce__grid {
+  display: grid;
+  column-gap: 0.5em;
+  grid-template-columns: repeat(var(--ce--columns), 1fr);
+  align-items: center;
+  flex: 1 0;
+}
+.coloredit .ce__grid input::-webkit-outer-spin-button, .coloredit .ce__grid input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.coloredit .ce__grid input[type=number] {
+  -moz-appearance: textfield;
+}
+.coloredit .ce__grid input[type=number], .coloredit .ce__grid input[type=text], .coloredit .ce__grid--label {
+  box-sizing: border-box;
+  text-align: center;
+  width: 100%;
+  outline: none;
+}
+.coloredit .ce__grid--label {
+  color: var(--ce-label-color);
+}
+.coloredit .ce__switch-buttons {
+  margin: 0 0 0 0.5em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.coloredit .ce__switch-buttons .button--up, .coloredit .ce__switch-buttons .button--down {
+  cursor: pointer;
+  width: var(--ce-arrow-size);
+  height: var(--ce-arrow-size);
+  border-right: var(--ce-arrow-thickness) solid var(--ce-label-color);
+  border-bottom: var(--ce-arrow-thickness) solid var(--ce-label-color);
+  transform-origin: center;
+}
+.coloredit .ce__switch-buttons .button--up {
+  transform: rotate(-135deg);
+}
+.coloredit .ce__switch-buttons .button--down {
+  transform: rotate(45deg);
 }
