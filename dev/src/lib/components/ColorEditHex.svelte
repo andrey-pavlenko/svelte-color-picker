@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { isHexValid } from '$lib/converter';
+  import { isHexValid } from '../converter';
 
   export let color = '#000';
   export let placeholder = '#000';

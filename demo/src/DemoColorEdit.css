@@ -1,0 +1,8 @@
+input {
+  @apply border-2 px-2;
+}
+
+.coloredit__rgba,
+.coloredit__hsla {
+  width: 128px;
+}

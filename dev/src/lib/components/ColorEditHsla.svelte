@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { hexToHsl, hslToHex } from '$lib/converter';
+  import { hexToHsl, hslToHex } from '../converter';
 
   export let color = '#000';
 

@@ -5,6 +5,7 @@ PACKAGE_BRANCH='package'
 
 set -e
 git checkout $MAIN_BRANCH
+npm run package -w dev
 cp -r package _package
 git checkout $PACKAGE_BRANCH
 GLOBIGNORE='.git:_package'
