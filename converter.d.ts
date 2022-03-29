@@ -17,6 +17,7 @@ export interface RgbColor {
     a?: number;
 }
 export declare type HexColor = string;
+export declare function isHexValid(hex: HexColor): boolean;
 export declare function hexToHsl(hex: HexColor): HslColor;
 export declare function hexToRgb(hex: HexColor): RgbColor;
 export declare function hslToRgb(hsl: HslColor): RgbColor;

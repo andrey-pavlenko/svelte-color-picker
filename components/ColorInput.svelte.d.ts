@@ -5,12 +5,14 @@ declare const __propDef: {
         style?: string | undefined;
         color?: string;
         debounce?: number;
-        isOpen?: boolean;
+        open?: boolean;
     };
     events: {
         [evt: string]: CustomEvent<any>;
     };
-    slots: {};
+    slots: {
+        default: {};
+    };
 };
 export declare type ColorInputProps = typeof __propDef.props;
 export declare type ColorInputEvents = typeof __propDef.events;

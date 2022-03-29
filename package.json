@@ -1,12 +1,17 @@
 {
   "name": "svelte-color-picker",
-  "version": "0.1.6",
+  "version": "0.2.0",
   "type": "module",
   "dependencies": {
     "lodash.debounce": "^4.0.8"
   },
   "exports": {
     "./package.json": "./package.json",
+    "./components/ColorEdit.sass": "./components/ColorEdit.sass",
+    "./components/ColorEdit.svelte": "./components/ColorEdit.svelte",
+    "./components/ColorEditHex.svelte": "./components/ColorEditHex.svelte",
+    "./components/ColorEditHsla.svelte": "./components/ColorEditHsla.svelte",
+    "./components/ColorEditRgba.svelte": "./components/ColorEditRgba.svelte",
     "./components/ColorInput.sass": "./components/ColorInput.sass",
     "./components/ColorInput.svelte": "./components/ColorInput.svelte",
     "./components/ColorPicker.sass": "./components/ColorPicker.sass",

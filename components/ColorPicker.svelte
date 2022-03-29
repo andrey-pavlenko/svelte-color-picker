@@ -5,6 +5,7 @@ export { classes as class };
 export let style = undefined;
 export let color = '#000';
 export let debounce = 0;
+// const _l = console.info;
 let h, s, v, a, x, y;
 let updater;
 function initColors(init) {
@@ -13,13 +14,12 @@ function initColors(init) {
     s = hsv.s;
     v = hsv.v;
     a = hsv.a ?? 1;
-    x = s * 100;
-    y = (1 - v) * 100;
+    x = s;
+    y = 100 - v;
 }
-$: updater = _debounce((h, x, y, a) => (color = rgbToHex(hsvToRgb({ h, s: x / 100, v: (100 - y) / 100, a }))), debounce);
-// function updateColor(h: number, x: number, y: number, a: number) {
-//   color = rgbToHex(hsvToRgb({ h, s: x / 100, v: (100 - y) / 100, a }));
-// }
+$: updater = _debounce((h, x, y, a) => {
+    color = rgbToHex(hsvToRgb({ h, s: x, v: 100 - y, a }));
+}, debounce);
 $: initColors(color);
 $: updater(h, x, y, a);
 function actionToneInteraction(node) {
@@ -95,7 +95,9 @@ function actionToneInteraction(node) {
 <div class={'colorpicker' + (classes ? ' ' + classes : '')} style={style || undefined}>
   <div
     class="cp__body"
-    style="--cp-current-hue: {rgbToHex(hsvToRgb({ h, s: 1, v: 1 }))}; --cp-current-color: {color} "
+    style="--cp-current-hue: {rgbToHex(
+      hsvToRgb({ h, s: 100, v: 100 })
+    )}; --cp-current-color: {color} "
   >
     <div class="cp__tone" tabindex="0" use:actionToneInteraction>
       <div class="cp__tone--marker" style="left: {x}%; top: {y}%" />
